@@ -1,0 +1,52 @@
+# Nextcloud dockerfile
+#
+# contains passwords. Remap using secrets
+#
+# before running this, run `docker network create nextcloud_network`  
+#
+#then run `docker-compose --file ./nextcloud_docker_compose.yaml up -d`   
+---
+    version: "2.1"
+    services:
+        nextcloud:
+            image: ghcr.io/linuxserver/nextcloud
+            container_name: nextcloud
+            networks:
+                - nextcloud_network
+            depends_on:
+                - mariadb
+            environment:
+                - PUID=1000
+                - PGID=1000
+                - TZ=Europe/London
+            volumes:
+                - /root/mine/container_stuff/nextcloud/config:/config
+                - /mnt/harddiskPartition1:/data/harddiskPartition1
+                - /root/mine:/data/local
+            ports:
+                - 7001:443    #7001 on host machine mapped to 443 in container
+            restart: unless-stopped
+
+        mariadb:
+            image: ghcr.io/linuxserver/mariadb
+            container_name: mariadb_for_nextcloud
+            networks:
+                - nextcloud_network
+            environment:
+                - PUID=1000
+                - PGID=1000
+                - MYSQL_ROOT_PASSWORD=root_serena_password
+                - TZ=Europe/London
+                - MYSQL_DATABASE=nextcloud_mariadb_db #optional
+                - MYSQL_USER=serena #optional
+                - MYSQL_PASSWORD=supersecretcontainer* #optional
+                - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+            volumes:
+                - /root/mine/container_stuff/mariadb/config:/config
+            ports:
+                - 7002:3306
+            restart: unless-stopped
+
+    networks:
+        nextcloud_network:
+            external: true
