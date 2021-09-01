@@ -19,6 +19,12 @@
                 - PUID=1000
                 - PGID=1000
                 - TZ=Europe/London
+                - MYSQL_PASSWORD=supersecretcontainer*  #these 4 MYSQL lines were added later
+                - MYSQL_DATABASE=nextcloud_mariadb_db
+                - MYSQL_USER=serena
+                - MYSQL_HOST=mariadb
+
+
             volumes:
                 - /root/mine/container_stuff/nextcloud/config:/config
                 - /mnt/harddiskPartition1:/data/harddiskPartition1

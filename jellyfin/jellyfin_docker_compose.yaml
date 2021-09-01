@@ -1,0 +1,35 @@
+#Jellyfin docker compose file
+---
+    version: "2.1"
+    services:
+        jellyfin:
+            image: ghcr.io/linuxserver/jellyfin
+            container_name: jellyfin
+            environment:
+                - PUID=1000
+                - PGID=1000
+                - TZ=Europe/London
+                - JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
+            volumes:
+                - /root/mine/container_stuff/jellyfin/config:/config
+                - /mnt/harddiskPartition1/Anime:/data/Anime
+                - /mnt/harddiskPartition1/Movies:/data/movies
+                - /mnt/harddiskPartition1/Animated\ Movies:/data/AnimatedMovies
+                - /mnt/harddiskPartition1/TV\ series:/data/'TV series'
+                - /mnt/harddiskPartition1/Music:/data/Music
+                - /mnt/harddiskPartition1/Good\ ones:/data/'Good ones'
+                # - /opt/vc/lib:/opt/vc/lib #optional
+            ports:
+                - 8096:8096
+                - 8920:8920 #optional
+                - 7359:7359/udp #optional
+                - 1900:1900/udp #optional
+            devices:
+                - /dev/sdb2:/dev/harddiskpartition1
+                # - /dev/dri:/dev/dri #optional
+                # - /dev/vcsm:/dev/vcsm #optional
+                # - /dev/vchiq:/dev/vchiq #optional
+                # - /dev/video10:/dev/video10 #optional
+                # - /dev/video11:/dev/video11 #optional
+                # - /dev/video12:/dev/video12 #optional
+            restart: unless-stopped

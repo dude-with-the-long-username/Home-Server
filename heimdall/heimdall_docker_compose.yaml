@@ -1,0 +1,17 @@
+#Heimdall docker compose file
+---
+    version: "2.1"
+    services:
+        heimdall:
+            image: ghcr.io/linuxserver/heimdall
+            container_name: heimdall
+            environment:
+                - PUID=1000
+                - PGID=1000
+                - TZ=Europe/London
+            volumes:
+                - /root/mine/container_stuff/heimdall/config:/config
+            ports:
+                - 7004:80
+                - 7005:443
+            restart: unless-stopped
