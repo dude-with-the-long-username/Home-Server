@@ -1,7 +1,5 @@
 # Nextcloud dockerfile
 #
-# contains passwords. Remap using secrets
-#
 # before running this, run `docker network create nextcloud_network`  
 #
 #then run `docker-compose --file ./nextcloud_docker_compose.yaml up -d`   
@@ -19,7 +17,7 @@
                 - PUID=1000
                 - PGID=1000
                 - TZ=Europe/London
-                - MYSQL_PASSWORD=supersecretcontainer*  #these 4 MYSQL lines were added later
+                - MYSQL_PASSWORD=supersecretpassword  #Insert your password here
                 - MYSQL_DATABASE=nextcloud_mariadb_db
                 - MYSQL_USER=serena
                 - MYSQL_HOST=mariadb
